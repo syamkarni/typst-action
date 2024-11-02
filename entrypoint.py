@@ -9,7 +9,9 @@ def compile(filename: str, options: list[str]) -> bool:
 
     Returns True if the typst command exited with status 0, False otherwise.
     """
-    command = ["typst"] + options + ["compile", filename]
+    # Modify the command to compile to `docs/filename.pdf`
+    output_path = f"docs/{filename[:-4]}.pdf"
+    command = ["typst", "compile"] + options + [filename, output_path]
     logging.debug("Running: " + " ".join(command))
 
     result = subprocess.run(command, capture_output=True, text=True)
@@ -20,6 +22,7 @@ def compile(filename: str, options: list[str]) -> bool:
         return False
 
     return True
+
 
 
 def main():
